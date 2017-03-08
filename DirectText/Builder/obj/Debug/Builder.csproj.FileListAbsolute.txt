@@ -1,0 +1,8 @@
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\bin\Debug\Builder.exe
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\bin\Debug\Builder.pdb
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\obj\Debug\Builder.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\obj\Debug\Builder.Properties.Resources.resources
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\obj\Debug\Builder.csproj.GenerateResource.Cache
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\obj\Debug\Builder.exe
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\obj\Debug\Builder.pdb
+C:\Users\user\Documents\Visual Studio 2015\Projects\DirectText\Builder\obj\Debug\Builder.Form1.resources

